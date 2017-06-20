@@ -6,6 +6,8 @@
 #
 
 library(shiny)
+library(ggplot2)
+library(ggthemes)
 library(SRP)
 load("data/GSE79519.RData")
 
@@ -63,12 +65,19 @@ shinyServer(function(input, output) {
     bins <- seq(0, 1, length.out = input$bins + 1)
 
     # draw the histogram with the specified number of bins
-    hist(Pvalues(), 
-         main = "P value histogram",
-         xlab = "P values", 
-         breaks = bins, 
-         col = 'darkgray', 
-         border = 'white')
+    # hist(Pvalues(), 
+    #      main = "P value histogram",
+    #      xlab = "P values", 
+    #      breaks = bins, 
+    #      col = 'darkgray', 
+    #      border = 'white')
+    ggplot(data.frame(pvalues=Pvalues())) +
+      aes(pvalues) +
+      geom_histogram(bins = input$bins) +
+      ggtitle("P value histogram") +
+      # theme_fivethirtyeight() +
+      xlab("P values") +
+      ylab("Count")
 
   })
   
@@ -78,11 +87,12 @@ shinyServer(function(input, output) {
       
       if(inherits(Srp(),"try-error")) return(Srp()[1])
       
-      paste0("SRP: ", round(Srp()[1], 2), 
-             "; pi0: ", round(Srp()[2], 2), 
-             "; estimated number of false positives: ", round(Srp()[3], 0),
-             "; effects in replication study: ", round(Srp()[4], 0),
-             "; undetected effects: ", round(Srp()[5], 0),".")
+      paste0("<hr> Estimated power, based on P value histogram and &#x3C0;0: <span style='color:blue'>", round(Srp()[1], 2),"</span>", 
+             "<br> Proportion of true null hypotheses, &#x3C0;0: <span style='color:blue'>", round(Srp()[2], 2),"</span>", 
+             "<br> Estimated number of false positives: ", round(Srp()[3], 0),
+             "<br> Effects in replication study: ", round(Srp()[4], 0),
+             "<br> Undetected effects: ", round(Srp()[5], 0),
+             "<hr> Cannot make sense of your P value histogram? Please have a look at this blog for help: <a href='http://varianceexplained.org/statistics/interpreting-pvalue-histogram/'>How to interpret a p-value histogram</a>.")
     })
 
 })

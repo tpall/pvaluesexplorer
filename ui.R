@@ -7,7 +7,7 @@
 
 library(shiny)
 
-shinyUI(fluidPage(
+shinyUI(fluidPage(theme = "bootstrap.css",
   
   # Application title
   titlePanel("P value histogram-based retrospective power"),
@@ -19,7 +19,7 @@ shinyUI(fluidPage(
       
       # Select file dialog
       fileInput(inputId = "infile",
-                label = "Choose your P value or 'toptable'/'toptag' file in regular delimited format (e.g. csv):",
+                label = "Choose your 'toptable'/'toptag' file with P values in regular delimited format (e.g. csv):",
                 accept = c(
                   "text/csv",
                   "text/comma-separated-values,text/plain",
@@ -41,7 +41,7 @@ shinyUI(fluidPage(
     # Show a plot of the generated distribution
     mainPanel(
       plotOutput("distPlot"),
-      textOutput("srpText")
+      htmlOutput("srpText")
     )
   )
 ))
