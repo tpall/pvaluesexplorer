@@ -87,7 +87,7 @@ shinyServer(function(input, output) {
       
       if(inherits(Srp(),"try-error")) return(Srp()[1])
       
-      paste0("<hr> Estimated power, based on P value histogram and &#x3C0;0: <span style='color:blue'>", round(Srp()[1], 2),"</span>", 
+      paste0("<hr> Estimated power, based on P value histogram: <span style='color:blue'>", round(Srp()[1], 2),"</span>", 
              "<br> Proportion of true null hypotheses, &#x3C0;0: <span style='color:blue'>", round(Srp()[2], 2),"</span>", 
              "<br> Estimated number of false positives: ", round(Srp()[3], 0),
              "<br> Effects in replication study: ", round(Srp()[4], 0),
