@@ -35,7 +35,7 @@ shinyServer(function(input, output) {
     } else {
     
     var <- colnames(Dataset())[Expcol()]
-    sliderInput("thres", paste("To remove uninformative genes with low expression, set filter threshold for", var, "(showing 0.1% values from the lower tail):"),
+    sliderInput("thres", paste("To remove uninformative genes with low expression, set filter threshold for", var, "(slider shows 0.1% values from the lower tail):"),
                 min = 0, 
                 max = floor(0.001*max(Dataset()[, Expcol()], na.rm=TRUE)), 
                 value = 0)
