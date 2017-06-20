@@ -8,28 +8,40 @@
 library(shiny)
 
 shinyUI(fluidPage(
-
+  
   # Application title
   titlePanel("P value histogram-based retrospective power"),
-
+  
   # Sidebar with a slider input for number of bins
   sidebarLayout(
     
     sidebarPanel(
-      # Select file
-      fileInput(inputId = "file1",
-                label = "Choose .csv file with your many P values"),
-      # Select number of bins
+      
+      # Select file dialog
+      fileInput(inputId = "infile",
+                label = "Choose your P value or 'toptable'/'toptag' file in regular delimited format (e.g. csv):",
+                accept = c(
+                  "text/csv",
+                  "text/comma-separated-values,text/plain",
+                  ".csv")),
+      tags$hr(),
+      
+      # Select number of histogram bins
       sliderInput("bins",
-                  "Number of bins:",
+                  "Number of histogram bins:",
                   min = 1,
                   max = 100,
-                  value = 60)
-      ),
-
+                  value = 60),
+      
+      # Set basemean, logcpm or aveexpr threshold
+      uiOutput("setThresh")
+    
+    ),
+    
     # Show a plot of the generated distribution
     mainPanel(
-      plotOutput("distPlot")
+      plotOutput("distPlot"),
+      textOutput("srpText")
     )
   )
 ))
