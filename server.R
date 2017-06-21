@@ -31,7 +31,7 @@ shinyServer(function(input, output) {
   output$setThresh <- renderUI({
     
     if (is.null(Dataset())) {
-      pvalues <- NULL
+      return(NULL)
     } else {
     
     var <- colnames(Dataset())[Expcol()]
