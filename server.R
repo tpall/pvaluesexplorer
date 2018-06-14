@@ -64,18 +64,10 @@ shinyServer(function(input, output) {
     
     bins <- seq(0, 1, length.out = input$bins + 1)
 
-    # draw the histogram with the specified number of bins
-    # hist(Pvalues(), 
-    #      main = "P value histogram",
-    #      xlab = "P values", 
-    #      breaks = bins, 
-    #      col = 'darkgray', 
-    #      border = 'white')
     ggplot(data.frame(pvalues = Pvalues())) +
       aes(pvalues) +
       geom_histogram(bins = input$bins) +
       ggtitle("P value histogram") +
-      # theme_fivethirtyeight() +
       xlab("P values") +
       ylab("Count")
 
