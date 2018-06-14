@@ -7,7 +7,10 @@
 
 library(shiny)
 
-shinyUI(fluidPage(theme = "bootstrap.css",
+shinyUI(fluidPage(
+  
+  tags$head(includeScript("google-analytics.js")),
+  includeCSS("www/bootstrap.css"),
   
   # Application title
   titlePanel("P value histogram-based retrospective power"),

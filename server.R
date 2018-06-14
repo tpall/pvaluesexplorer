@@ -71,7 +71,7 @@ shinyServer(function(input, output) {
     #      breaks = bins, 
     #      col = 'darkgray', 
     #      border = 'white')
-    ggplot(data.frame(pvalues=Pvalues())) +
+    ggplot(data.frame(pvalues = Pvalues())) +
       aes(pvalues) +
       geom_histogram(bins = input$bins) +
       ggtitle("P value histogram") +
