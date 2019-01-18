@@ -7,7 +7,6 @@
 
 library(shiny)
 library(ggplot2)
-library(ggthemes)
 library(SRP)
 load("data/GSE79519.RData")
 
@@ -37,7 +36,7 @@ shinyServer(function(input, output) {
     var <- colnames(Dataset())[Expcol()]
     sliderInput("thres", paste("To remove uninformative genes with low expression, set filter threshold for", var, "(slider shows 0.1% values from the lower tail):"),
                 min = 0, 
-                max = floor(0.001*max(Dataset()[, Expcol()], na.rm=TRUE)), 
+                max = floor(0.001 * max(Dataset()[, Expcol()], na.rm = TRUE)), 
                 value = 0)
       }
     
@@ -47,7 +46,7 @@ shinyServer(function(input, output) {
     if (is.null(Dataset())) return(NULL)
     pval_regexp <- "p[:punct:]*[:space:]*[:punct:]*[:space:]*val"
     pvcol <- grep(pval_regexp, tolower(colnames(Dataset())))
-    overthresh <- Dataset()[,Expcol()]>input$thres
+    overthresh <- Dataset()[,Expcol()] > input$thres
     Dataset()[overthresh, pvcol]
   })
 
@@ -62,14 +61,12 @@ shinyServer(function(input, output) {
     
     if (is.null(Pvalues())) return(NULL)
     
-    bins <- seq(0, 1, length.out = input$bins + 1)
-
-    ggplot(data.frame(pvalues = Pvalues())) +
-      aes(pvalues) +
-      geom_histogram(bins = input$bins) +
-      ggtitle("P value histogram") +
-      xlab("P values") +
-      ylab("Count")
+    data <- data.frame(values = Pvalues())
+    ggplot(data = data) +
+      geom_histogram(mapping = aes(x = values), bins = input$bins) +
+      labs(title = "P value histogram", 
+           x = "P values",
+           y = "Count")
 
   })
   
