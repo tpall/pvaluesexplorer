@@ -45,8 +45,8 @@ shinyServer(function(input, output) {
   
   Pvalues <- reactive({
     if (is.null(Dataset())) return(NULL)
-    
-    pvcol <- grep("^p-?val", tolower(colnames(Dataset())))
+    pval_regexp <- "p[:punct:]*[:space:]*[:punct:]*[:space:]*val"
+    pvcol <- grep(pval_regexp, tolower(colnames(Dataset())))
     overthresh <- Dataset()[,Expcol()]>input$thres
     Dataset()[overthresh, pvcol]
   })
